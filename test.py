@@ -1,0 +1,11 @@
+from browser import FileBrowser
+f = FileBrowser()
+print(f.show_directory())
+f.open("Users")
+print(f.show_directory())
+f.open("User")
+print(f.show_directory())
+f.open("Downloads")
+print(f.show_directory())
+print(f.open("(1) WhatsApp.html"))
+print(f.get_file_path("test"))
