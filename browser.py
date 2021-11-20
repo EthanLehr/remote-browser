@@ -14,15 +14,16 @@ class FileBrowser:
         print(os.getcwd())
         absolute_path = os.getcwd() if absolute_path is None else absolute_path
         dir_items = os.listdir(absolute_path)
-        return f"Directory: {absolute_path} items of len {len(dir_items)}:\n {dir_items}"
+        return f"Directory: {absolute_path} contains: {len(dir_items)}: items\n {dir_items}"
 
 
-    def open(self, chosen_file: str) -> str:
+    def open_directory(self, chosen_file: str) -> str:
         absolute_path = os.path.join(self.cwd, chosen_file)
-        if not os.path.isdir(absolute_path):
-            return f"the chosen item {chosen_file} is not directory"
-        if chosen_file not in os.listdir(self.cwd):
-            return f"the chosen directory {chosen_file} not found"
+        items_in_dir = os.listdir(self.cwd)
+        if chosen_file not in items_in_dir:
+            return f"the chosen item {chosen_file} is not found"
+        elif chosen_file in items_in_dir and os.path.isfile(absolute_path):
+            return f"the chosen item {chosen_file} is a file"
         os.chdir(absolute_path)
         return self.show_directory(absolute_path)
 
