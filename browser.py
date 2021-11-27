@@ -1,5 +1,6 @@
 import os
 
+
 class FileBrowser:
     def __init__(self):
         os.chdir("\\")
@@ -21,17 +22,19 @@ class FileBrowser:
         absolute_path = os.path.join(self.cwd, chosen_file)
         items_in_dir = os.listdir(self.cwd)
         if chosen_file not in items_in_dir:
-            return f"the chosen item {chosen_file} is not found"
+            raise FileNotFoundError(f"the chosen item {chosen_file} is not found")
         elif chosen_file in items_in_dir and os.path.isfile(absolute_path):
-            return f"the chosen item {chosen_file} is a file"
+            raise NotADirectoryError(f"the chosen item {chosen_file} is a file")
         os.chdir(absolute_path)
-        return self.show_directory(absolute_path)
+
+
 
     def get_file_path(self, chosen_file: str) -> str:
         absolute_path = os.path.join(self.cwd, chosen_file)
         if chosen_file in os.listdir() and os.path.isfile(absolute_path):
             return absolute_path
-        return f"the chosen item {chosen_file} is not file"
+        raise FileNotFoundError(f"the chosen item {chosen_file} is not file")
+
 
 
 

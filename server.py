@@ -43,7 +43,12 @@ while True:
         conn.sendall(dir_items_str.encode())
     if data.decode() == "get abs path":
         path_to_get = conn.recv(1000).decode()
-        conn.sendall(broswer.get_file_path(path_to_get).encode())
+        try:
+            file_path = broswer.get_file_path(path_to_get)
+            response = file_path
+        except FileNotFoundError as e:
+            response = str(e)
+        conn.sendall(response.encode())
     if data.decode() == "get file using abs path":
         path_to_file = conn.recv(1000).decode()
         send_file(path_to_file)
