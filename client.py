@@ -50,7 +50,8 @@ while True:
         f.close()
 
 
-    if choice == "exit":
+    if choice == "kill con":
+        my_socket.send(choice.encode())
         break
 
 my_socket.close()
