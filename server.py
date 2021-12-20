@@ -39,8 +39,12 @@ while True:
         conn.sendall(dir_items_as_str.encode())
     if data.decode() == "open":
         folder_to_open = conn.recv(1000).decode()
-        dir_items_str = broswer.open_directory(folder_to_open)
-        conn.sendall(dir_items_str.encode())
+        try:
+            dir_items_str = broswer.open_directory(folder_to_open)
+            response = dir_items_str
+        except (FileNotFoundError, NotADirectoryError) as e:
+            response = str(e)
+        conn.sendall(response.encode())
     if data.decode() == "get abs path":
         path_to_get = conn.recv(1000).decode()
         try:
